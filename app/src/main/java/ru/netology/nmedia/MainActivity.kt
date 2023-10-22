@@ -24,8 +24,8 @@ class MainActivity : AppCompatActivity() {
             published =  "21 мая в 18:36",
             content =  "Привет, это новая Нетология! Когда-то Нетология начиналась с интенсивов по онлайн-маркетингу. Затем появились курсы по дизайну, разработке, аналитике и управлению. Мы растём сами и помогаем расти студентам: от новичков до уверенных профессионалов. Но самое важное остаётся с нами: мы верим, что в каждом уже есть сила, которая заставляет хотеть больше, целиться выше, бежать быстрее. Наша миссия — помочь встать на путь роста и начать цепочку перемен → http://netolo.gy/fyb",
             likeByMe = false,
-            likes = 2311682,
-            shares = 0
+            likes = 1500,
+            shares = 320000
         )
 
         with(binding){
@@ -39,10 +39,15 @@ class MainActivity : AppCompatActivity() {
                 binding.like.setImageResource(R.drawable.liked_24)
             }
 
+
             like.setOnClickListener{
                 post.likeByMe = !post.likeByMe
                 like.setImageResource(if (post.likeByMe) R.drawable.liked_24 else R.drawable.baseline_favorite_border_24)
-                post.likes += if (post.likeByMe) 1 else -1
+                if (post.likeByMe) {
+                    post.likes++
+                } else {
+                    post.likes--
+                }
                 likesCounter.text = formatShortened(post.likes)
             }
 

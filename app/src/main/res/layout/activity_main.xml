@@ -14,7 +14,7 @@
         android:layout_height="48dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@mipmap/ic_launcher_round" />
+        android:src="@mipmap/ic_launcher_round" />
 
     <TextView
         android:id="@+id/author"
@@ -70,7 +70,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="content" />
+        app:constraint_referenced_ids="content"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="249dp" />
 
 
     <ImageButton
