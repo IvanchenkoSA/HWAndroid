@@ -14,7 +14,7 @@
         android:layout_height="48dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@sample/posts_avatars" />
+        android:src="@mipmap/ic_launcher_round" />
 
     <TextView
         android:id="@+id/author"
@@ -70,7 +70,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="content" />
+        app:constraint_referenced_ids="content"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="249dp" />
 
 
     <ImageButton
@@ -81,7 +83,7 @@
         android:background="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/barrier2"
-        app:srcCompat="@drawable/heart" />
+        app:srcCompat="@drawable/baseline_favorite_border_24" />
 
     <TextView
         android:id="@+id/likesCounter"
@@ -126,6 +128,7 @@
         app:srcCompat="@drawable/share" />
 
     <TextView
+        android:id="@+id/shareCounter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
