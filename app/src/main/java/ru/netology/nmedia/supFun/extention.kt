@@ -1,4 +1,5 @@
 package ru.netology.nmedia.supFun
+
 fun formatShortened(value: Int): String {
     val appendix: String
     val result: Int = when {

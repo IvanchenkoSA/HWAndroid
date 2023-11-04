@@ -19,8 +19,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val viewModel by viewModels<PostViewModel>()
-        viewModel.data.observe(this){post ->
-            with(binding){
+        viewModel.data.observe(this) { post ->
+            with(binding) {
                 author.text = post.author
                 published.text = post.published
                 content.text = post.content
@@ -28,17 +28,16 @@ class MainActivity : AppCompatActivity() {
                 shareCounter.text = formatShortened(post.shares)
                 like.setImageResource(if (post.likeByMe) R.drawable.liked_24 else R.drawable.baseline_favorite_border_24)
 
-                if (post.likeByMe){
+                if (post.likeByMe) {
                     binding.like.setImageResource(R.drawable.liked_24)
                 }
-
             }
         }
-        binding.like.setOnClickListener{
+        binding.like.setOnClickListener {
             viewModel.like()
         }
 
-        binding.shareBtn.setOnClickListener{
+        binding.shareBtn.setOnClickListener {
             viewModel.share()
         }
     }
