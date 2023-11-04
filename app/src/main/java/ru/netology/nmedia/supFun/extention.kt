@@ -1,4 +1,5 @@
 package ru.netology.nmedia.supFun
+
 fun formatShortened(value: Int): String {
     val appendix: String
     val result: Int = when {
@@ -15,5 +16,5 @@ fun formatShortened(value: Int): String {
             value
         }
     }
-    return "$result${if (value in 1100..9999 || value >= 1100000) "." + value.toString()[1] else ""}$appendix"
+    return "$result${if (value in 1100..9999) "." + value.toString()[1] else ""}$appendix"
 }
