@@ -10,18 +10,21 @@ import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.supFun.formatShortened
 
-class PostAdapter(private val listener: (Post) -> Unit) : RecyclerView.Adapter<PostAdapter.Holder>() {
+class PostAdapter(
+    private val likeListener: (Post) -> Unit,
+    private val shareListener: (Post) -> Unit
+) : RecyclerView.Adapter<PostAdapter.Holder>() {
 
-    var list : List<Post> = emptyList()
+    var list: List<Post> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
-
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder =
-        Holder(CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false), listener)
+        Holder(
+            CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+            likeListener, shareListener
+        )
 
     override fun getItemCount(): Int = list.size
 
@@ -30,7 +33,12 @@ class PostAdapter(private val listener: (Post) -> Unit) : RecyclerView.Adapter<P
         holder.bind(post)
     }
 
-    class Holder(private val binding: CardPostBinding, private  val listener: (Post) -> Unit) : RecyclerView.ViewHolder(binding.root) {
+    class Holder(
+        private val binding: CardPostBinding,
+        private val likeListener: (Post) -> Unit,
+        private val shareListener: (Post) -> Unit
+    ) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(post: Post) {
             with(binding) {
                 author.text = post.author
@@ -40,10 +48,10 @@ class PostAdapter(private val listener: (Post) -> Unit) : RecyclerView.Adapter<P
                 shareCounter.text = formatShortened(post.shares)
                 like.setImageResource(if (post.likeByMe) R.drawable.liked_24 else R.drawable.baseline_favorite_border_24)
                 like.setOnClickListener {
-                    listener(post)
+                    likeListener(post)
                 }
-                if (post.likeByMe) {
-                    like.setImageResource(R.drawable.liked_24)
+                shareBtn.setOnClickListener {
+                    shareListener(post)
                 }
             }
         }
