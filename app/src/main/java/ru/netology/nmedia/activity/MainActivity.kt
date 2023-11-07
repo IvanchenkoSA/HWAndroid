@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         binding.rcView.adapter = adapter
 
         viewModel.data.observe(this) { posts ->
-            adapter.list = posts
+            adapter.submitList(posts)
             adapter.notifyDataSetChanged()
         }
     }
