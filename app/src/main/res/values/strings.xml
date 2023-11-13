@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">NMedia</string>
     <string name="name">NMedia!</string>
-
+    <string name="menu_remove" translatable="false">Remove</string>
+    <string name="menu_edit" translatable="false">Edit</string>
+    <string name="hint" translatable="false">Post text</string>
+    <string name="error_empty_content" translatable="false">Empty text</string>
+    <string name="test_text_field" translatable="false">Test text field</string>
+    <string name="edit_post" translatable="false">Edit Post</string>
 </resources>
