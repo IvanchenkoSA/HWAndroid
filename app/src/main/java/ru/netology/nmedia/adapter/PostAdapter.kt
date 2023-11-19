@@ -20,6 +20,7 @@ interface OnInteractionListener {
     fun onRemove(post: Post)
     fun onShare(post: Post)
 }
+
 class PostAdapter(
     private val onInteractionListener: OnInteractionListener
 
@@ -47,9 +48,9 @@ class PostAdapter(
                 author.text = post.author
                 published.text = post.published
                 content.text = post.content
-                likesCounter.text = formatShortened(post.likes)
-                shareCounter.text = formatShortened(post.shares)
-                like.setImageResource(if (post.likeByMe) R.drawable.liked_24 else R.drawable.baseline_favorite_border_24)
+                shareBtn.text = formatShortened(post.shares)
+                like.isChecked = post.likeByMe
+                like.text = formatShortened(post.likes)
                 like.setOnClickListener {
                     onInteractionListener.onLike(post)
                 }
@@ -60,7 +61,7 @@ class PostAdapter(
                     PopupMenu(it.context, it).apply {
                         inflate(R.menu.options_menu)
                         setOnMenuItemClickListener { menuItem ->
-                            when (menuItem.itemId){
+                            when (menuItem.itemId) {
                                 R.id.edit -> {
                                     onInteractionListener.onEdit(post)
                                     true
@@ -79,7 +80,7 @@ class PostAdapter(
     }
 }
 
-object PostDiffCallback: DiffUtil.ItemCallback<Post>() {
+object PostDiffCallback : DiffUtil.ItemCallback<Post>() {
     override fun areItemsTheSame(oldItem: Post, newItem: Post) = oldItem.id == newItem.id
 
     override fun areContentsTheSame(oldItem: Post, newItem: Post) = oldItem == newItem
