@@ -63,6 +63,7 @@ class PostAdapter(
                         setOnMenuItemClickListener { menuItem ->
                             when (menuItem.itemId) {
                                 R.id.edit -> {
+
                                     onInteractionListener.onEdit(post)
                                     true
                                 }
