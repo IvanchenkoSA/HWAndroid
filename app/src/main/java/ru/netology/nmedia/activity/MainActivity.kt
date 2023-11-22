@@ -1,7 +1,10 @@
 package ru.netology.nmedia.activity
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.launch
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -21,19 +24,48 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        class EditPostActivityContract : ActivityResultContract<Post?, String?>() {
+
+            val viewModel: PostViewModel by viewModels()
+
+            override fun createIntent(context: Context, input: Post?): Intent {
+
+                return if (input != null) {
+                    val intent = Intent(context, EditPostActivity::class.java)
+                    intent.putExtra("key", input?.content)
+                    intent
+                } else {
+                    Intent(context, NewPostActivity::class.java)
+                }
+
+            }
+
+            override fun parseResult(resultCode: Int, intent: Intent?): String? =
+                if (resultCode == Activity.RESULT_OK) {
+                    intent?.getStringExtra(Intent.EXTRA_TEXT)
+                } else {
+                    viewModel.getDefault()
+                    null
+                }
+        }
+
+
         val viewModel: PostViewModel by viewModels()
-        val newPostContract = registerForActivityResult(NewPostActivityContract()){result ->
+        val newPostContract = registerForActivityResult(EditPostActivityContract()){result ->
             result?: return@registerForActivityResult
             viewModel.changeContent(result)
             viewModel.save()
 
         }
 
-        val changePostContract = registerForActivityResult(ChangePostActivityContract()){result ->
+        val editPostContract = registerForActivityResult(EditPostActivityContract()){ result ->
             result?: return@registerForActivityResult
             viewModel.changeContent(result)
             viewModel.save()
 
+        }
+        binding.newPostButton.setOnClickListener {
+            newPostContract.launch(null)
         }
 
         val adapter = PostAdapter(object : OnInteractionListener {
@@ -42,8 +74,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onEdit(post: Post) {
-                changePostContract.launch(post)
+                editPostContract.launch(post)
                 viewModel.edit(post)
+
             }
 
             override fun onRemove(post: Post) {
@@ -76,8 +109,8 @@ class MainActivity : AppCompatActivity() {
             adapter.notifyDataSetChanged()
         }
 
-        binding.newPostButton.setOnClickListener {
-            newPostContract.launch()
-        }
+
+
+
     }
 }
