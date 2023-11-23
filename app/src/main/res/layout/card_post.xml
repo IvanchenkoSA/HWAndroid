@@ -63,16 +63,46 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/video"
         app:layout_constraintTop_toBottomOf="@+id/barrier1"
         tools:layout_editor_absoluteX="2dp"
         tools:text="@sample/posts.json/data/content" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/videoGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="video, playButton" />
+
+
+    <ImageButton
+        android:id="@+id/video"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:src="@drawable/blight"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/barrier2"
+        app:layout_constraintTop_toBottomOf="@+id/content" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/playButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0.7"
+        android:src="@drawable/baseline_play_arrow_24"
+        app:layout_constraintBottom_toBottomOf="@id/video"
+        app:layout_constraintEnd_toEndOf="@id/video"
+        app:layout_constraintStart_toStartOf="@id/video"
+        app:layout_constraintTop_toTopOf="@id/video" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="content"
+        app:constraint_referenced_ids="video"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="249dp" />
 
