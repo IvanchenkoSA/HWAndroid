@@ -31,20 +31,5 @@ class EditPostActivity : AppCompatActivity() {
             }
             finish()
         }
-
-//        intent?.let {
-//            val text = it.getStringExtra(Intent.EXTRA_TEXT)
-//            if (text.isNullOrBlank()) {
-//                Snackbar.make(binding.root, R.string.text_empty_error, LENGTH_INDEFINITE)
-//                    .setAction("ok") {
-//                        finish()
-//                    }
-//                    .show()
-//                return@let
-//            }
-//            binding.content.setText(text)
-//            binding.content.requestFocus()
-//        }
-
     }
 }

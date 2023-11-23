@@ -21,7 +21,6 @@ class IntentHandlerActivity : AppCompatActivity() {
                 .show()
             return
         }
-
         binding.newText.text = text
     }
 }

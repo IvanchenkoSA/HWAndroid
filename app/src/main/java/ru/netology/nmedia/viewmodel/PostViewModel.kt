@@ -34,7 +34,7 @@ class PostViewModel : ViewModel() {
         edited.value = post
     }
 
-    fun getDefault(){
+    fun getDefault() {
         edited.value = empty
     }
 

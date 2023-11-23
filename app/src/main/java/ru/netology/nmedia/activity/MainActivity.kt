@@ -3,6 +3,7 @@ package ru.netology.nmedia.activity
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.launch
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val viewModel: PostViewModel by viewModels()
 
         class EditPostActivityContract : ActivityResultContract<Post?, String?>() {
 
@@ -50,22 +52,14 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        val viewModel: PostViewModel by viewModels()
-        val newPostContract = registerForActivityResult(EditPostActivityContract()){result ->
-            result?: return@registerForActivityResult
-            viewModel.changeContent(result)
-            viewModel.save()
-
-        }
-
-        val editPostContract = registerForActivityResult(EditPostActivityContract()){ result ->
-            result?: return@registerForActivityResult
+        val editPostContract = registerForActivityResult(EditPostActivityContract()) { result ->
+            result ?: return@registerForActivityResult
             viewModel.changeContent(result)
             viewModel.save()
 
         }
         binding.newPostButton.setOnClickListener {
-            newPostContract.launch(null)
+            editPostContract.launch(null)
         }
 
         val adapter = PostAdapter(object : OnInteractionListener {
@@ -85,13 +79,15 @@ class MainActivity : AppCompatActivity() {
 
             override fun onShare(post: Post) {
                 viewModel.shareById(post.id)
-                val intent = Intent().apply {
-                    action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_TEXT, post.content)
-                    type = "text/plane"
-                }
+                val intent = Intent().setAction(Intent.ACTION_SEND)
+                    .putExtra(Intent.EXTRA_TEXT, post.content)
+                    .setType("*/*")
                 var chooser = Intent.createChooser(intent, null)
                 startActivity(chooser)
+            }
+
+            override fun onVideo(post: Post) {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(post.video)))
             }
 
         })
@@ -108,9 +104,5 @@ class MainActivity : AppCompatActivity() {
             }
             adapter.notifyDataSetChanged()
         }
-
-
-
-
     }
 }
