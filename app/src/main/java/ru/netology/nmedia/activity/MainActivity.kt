@@ -6,7 +6,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContract
-import androidx.activity.result.launch
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,13 +27,11 @@ class MainActivity : AppCompatActivity() {
 
         class EditPostActivityContract : ActivityResultContract<Post?, String?>() {
 
-            val viewModel: PostViewModel by viewModels()
-
             override fun createIntent(context: Context, input: Post?): Intent {
 
                 return if (input != null) {
                     val intent = Intent(context, EditPostActivity::class.java)
-                    intent.putExtra("key", input?.content)
+                    intent.putExtra("key", input.content)
                     intent
                 } else {
                     Intent(context, NewPostActivity::class.java)
@@ -82,7 +79,7 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent().setAction(Intent.ACTION_SEND)
                     .putExtra(Intent.EXTRA_TEXT, post.content)
                     .setType("*/*")
-                var chooser = Intent.createChooser(intent, null)
+                val chooser = Intent.createChooser(intent, null)
                 startActivity(chooser)
             }
 
@@ -102,7 +99,6 @@ class MainActivity : AppCompatActivity() {
                     binding.rcView.smoothScrollToPosition(0)
                 }
             }
-            adapter.notifyDataSetChanged()
         }
     }
 }
