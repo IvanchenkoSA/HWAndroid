@@ -1,21 +1,19 @@
 package ru.netology.nmedia.activity
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.view.View
-import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostAdapter
 import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.viewmodel.PostViewModel
-import util.AndroidUtils
-import util.AndroidUtils.focusAndShowKeyboard
 
 
 @Suppress("DEPRECATION")
@@ -25,15 +23,51 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         val viewModel: PostViewModel by viewModels()
+
+        class EditPostActivityContract : ActivityResultContract<Post?, String?>() {
+
+            override fun createIntent(context: Context, input: Post?): Intent {
+
+                return if (input != null) {
+                    val intent = Intent(context, EditPostActivity::class.java)
+                    intent.putExtra("key", input.content)
+                    intent
+                } else {
+                    Intent(context, NewPostActivity::class.java)
+                }
+
+            }
+
+            override fun parseResult(resultCode: Int, intent: Intent?): String? =
+                if (resultCode == Activity.RESULT_OK) {
+                    intent?.getStringExtra(Intent.EXTRA_TEXT)
+                } else {
+                    viewModel.getDefault()
+                    null
+                }
+        }
+
+
+        val editPostContract = registerForActivityResult(EditPostActivityContract()) { result ->
+            result ?: return@registerForActivityResult
+            viewModel.changeContent(result)
+            viewModel.save()
+
+        }
+        binding.newPostButton.setOnClickListener {
+            editPostContract.launch(null)
+        }
+
         val adapter = PostAdapter(object : OnInteractionListener {
             override fun onLike(post: Post) {
                 viewModel.likeById(post.id)
             }
 
             override fun onEdit(post: Post) {
+                editPostContract.launch(post)
                 viewModel.edit(post)
+
             }
 
             override fun onRemove(post: Post) {
@@ -42,6 +76,15 @@ class MainActivity : AppCompatActivity() {
 
             override fun onShare(post: Post) {
                 viewModel.shareById(post.id)
+                val intent = Intent().setAction(Intent.ACTION_SEND)
+                    .putExtra(Intent.EXTRA_TEXT, post.content)
+                    .setType("*/*")
+                val chooser = Intent.createChooser(intent, null)
+                startActivity(chooser)
+            }
+
+            override fun onVideo(post: Post) {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(post.video)))
             }
 
         })
@@ -56,44 +99,6 @@ class MainActivity : AppCompatActivity() {
                     binding.rcView.smoothScrollToPosition(0)
                 }
             }
-            adapter.notifyDataSetChanged()
-        }
-        viewModel.edited.observe(this) { post ->
-            if (post.id != 0L) {
-                binding.content.setText(post.content)
-                binding.content.focusAndShowKeyboard()
-                binding.editCst.visibility = View.VISIBLE
-                binding.editable.text = post.content
-            }
-        }
-
-        binding.clearBtn.setOnClickListener {
-            binding.editable.text = ""
-            binding.editCst.visibility = View.GONE
-            binding.content.clearFocus()
-            binding.content.setText("")
-            viewModel.getDefault()
-            AndroidUtils.hideKeyboard(it)
-        }
-
-        binding.saveBtn.setOnClickListener {
-            val text = binding.content.text.toString()
-            if (text.isBlank()) {               // check is Blank
-                Toast.makeText(
-                    this,
-                    R.string.error_empty_content,
-                    Toast.LENGTH_LONG
-                ).show()
-                return@setOnClickListener
-            }
-            viewModel.changeContent(text)    // call change
-            viewModel.save()
-
-            binding.content.setText("")      // clear field EditText
-            binding.content.clearFocus()
-            AndroidUtils.hideKeyboard(it)
-            binding.editCst.visibility = View.GONE
-
         }
     }
 }

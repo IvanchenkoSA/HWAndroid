@@ -12,92 +12,99 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/editCst"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         tools:layout_editor_absoluteX="0dp"
         tools:listitem="@layout/card_post" />
 
-    <EditText
-        android:id="@+id/content"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:hint="@string/hint"
-        android:importantForAutofill="no"
-        android:inputType="textMultiLine"
-        android:maxLines="4"
-        android:padding="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/saveBtn"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageButton
-        android:id="@+id/saveBtn"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/newPostButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:src="@drawable/outline_done_24"
+        android:layout_margin="10dp"
+        android:src="@drawable/baseline_create_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier3"
-        android:layout_width="1dp"
-        android:layout_height="wrap_content"
-        app:barrierDirection="top"
-        app:constraint_referenced_ids="content, saveBtn" />
+    <!--    <EditText-->
+    <!--        android:id="@+id/content"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:background="@android:color/transparent"-->
+    <!--        android:hint="@string/hint"-->
+    <!--        android:importantForAutofill="no"-->
+    <!--        android:inputType="textMultiLine"-->
+    <!--        android:maxLines="4"-->
+    <!--        android:padding="4dp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toStartOf="@id/saveBtn"-->
+    <!--        app:layout_constraintStart_toStartOf="parent" />-->
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/editCst"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:visibility="gone"
-        tools:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@id/barrier3"
-        app:layout_constraintStart_toStartOf="parent">
+    <!--    <ImageButton-->
+    <!--        android:id="@+id/saveBtn"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:background="@android:color/transparent"-->
+    <!--        android:src="@drawable/outline_done_24"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent" />-->
 
-        <ImageView
-            android:id="@+id/iView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_create_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+    <!--    <androidx.constraintlayout.widget.Barrier-->
+    <!--        android:id="@+id/barrier3"-->
+    <!--        android:layout_width="1dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        app:barrierDirection="top"-->
+    <!--        app:constraint_referenced_ids="content, saveBtn" />-->
 
-        <TextView
-            android:id="@+id/tEt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/edit_post"
-            android:textColor="@color/teal_700"
-            app:layout_constraintBottom_toTopOf="@id/editable"
-            app:layout_constraintStart_toEndOf="@id/iView"
-            app:layout_constraintTop_toTopOf="@id/editCst"/>
+    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--        android:id="@+id/editCst"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:visibility="gone"-->
+    <!--        tools:visibility="visible"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@id/barrier3"-->
+    <!--        app:layout_constraintStart_toStartOf="parent">-->
 
-        <TextView
-            android:id="@+id/editable"
-            android:layout_width="0dp"
-            android:layout_height="27dp"
-            android:background="@android:color/transparent"
-            android:text="@string/test_text_field"
-            android:textSize="14sp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/clearBtn"
-            app:layout_constraintStart_toEndOf="@id/iView" />
+    <!--        <ImageView-->
+    <!--            android:id="@+id/iView"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:src="@drawable/baseline_create_24"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="parent" />-->
 
-        <ImageButton
-            android:id="@+id/clearBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:src="@drawable/baseline_clear_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+    <!--        <TextView-->
+    <!--            android:id="@+id/tEt"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:text="@string/edit_post"-->
+    <!--            android:textColor="@color/teal_700"-->
+    <!--            app:layout_constraintBottom_toTopOf="@id/editable"-->
+    <!--            app:layout_constraintStart_toEndOf="@id/iView"/>-->
+    <!--            app:layout_constraintTop_toTopOf="@id/editCst"/>&ndash;&gt;-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/editable"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="27dp"-->
+    <!--            android:background="@android:color/transparent"-->
+    <!--            android:text="@string/test_text_field"-->
+    <!--            android:textSize="14sp"-->
+    <!--            android:ellipsize="end"-->
+    <!--            android:maxLines="1"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintEnd_toStartOf="@id/clearBtn"-->
+    <!--            app:layout_constraintStart_toEndOf="@id/iView" />-->
+
+    <!--        <ImageButton-->
+    <!--            android:id="@+id/clearBtn"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:background="@android:color/transparent"-->
+    <!--            android:src="@drawable/baseline_clear_24"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent" />-->
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
