@@ -1,6 +1,5 @@
 package ru.netology.nmedia.dto
 
-import java.text.DecimalFormat
 
 data class Post(
     val id: Long,
